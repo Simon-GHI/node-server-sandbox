@@ -1,0 +1,8 @@
+{
+    "watch": [
+        "src"
+    ],
+    "ext": ".js,.ts",
+    "ignore": [],
+    "exec": "tsc && tsc-alias -p tsconfig.json && node dist/server.js"
+}
