@@ -1,5 +1,4 @@
 // Models
-// import { PokemonType } from './pokemon-type.js';
 import { PokemonType } from '@component-pokemon/model/pokemon-type.js';
 
 export type Pokemon = {

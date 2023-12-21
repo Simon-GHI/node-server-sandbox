@@ -1,13 +1,32 @@
-import { Request, Response } from 'express';
+import express, { Request, Response } from 'express';
+// Application
+import { IllegalArgumentError } from '@application/error/illegal-argument-error.js';
 // Models
-import { getPokemonById } from '@component-pokemon/service/pokemon-service.js';
+import { Pokemon } from '@component-pokemon/model/pokemon.js';
+// Services
+import {
+  createPokemon,
+  getPokemonById,
+  getPokemons,
+} from '@component-pokemon/service/pokemon-service.js';
 
-export const getPokemon = (req: Request, res: Response) => {
+export const pokemonRoutes = express.Router();
+
+pokemonRoutes.get('/', (_: Request, res: Response<Pokemon[]>) => {
+  const pokemons: Pokemon[] = getPokemons();
+  res.json(pokemons);
+});
+
+pokemonRoutes.get(`/:id`, (req: Request, res: Response<Pokemon>) => {
   const pokemonId = parseInt(req.params['id'] || '');
   if (isNaN(pokemonId) || pokemonId <= 0) {
-    res.status(400).send('Invalid pokemon ID');
-    return;
+    throw new IllegalArgumentError('Invalid pokemon ID');
   }
-  const pokemon = getPokemonById(pokemonId);
+  const pokemon: Pokemon = getPokemonById(pokemonId);
   res.json(pokemon);
-};
+});
+
+pokemonRoutes.post('/', (req: Request, res: Response<Pokemon>) => {
+  const pokemon: Pokemon = createPokemon({ ...req.body });
+  res.json(pokemon);
+});
