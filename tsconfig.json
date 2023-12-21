@@ -22,6 +22,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
+      "@application/configuration/*": ["application/configuration/*"],
+      "@application/error/*": ["application/model/error/*"],
       "@controllers/*": ["controllers/*"],
       "@component-pokemon/*": ["components/pokemon/*"]
     }
